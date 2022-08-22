@@ -1,6 +1,7 @@
 import sys
 import os
 from time import sleep
+import time
 from unittest import result
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -20,6 +21,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
 try:
     driver.get('https://www.linkedin.com/')
     sleep(5)
@@ -68,6 +70,8 @@ try:
     else:
         result['location'] = 'No Result'
     print(result)
+    time.sleep(2)
+    driver.quit()
 except Exception as e:
     print(e)
 

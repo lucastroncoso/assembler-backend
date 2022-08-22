@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.wait import WebDriverWait
 from parsel import Selector
 
 # driver = webdriver.Chrome()
@@ -20,11 +21,13 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--disable-gpu')
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-
+driver = webdriver.Chrome(executable_path=os.environ.get(
+    "CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+wait = WebDriverWait(driver, 10)
 try:
     driver.get('https://www.linkedin.com/')
-    sleep(5)
+    WebDriverWait(driver, timeout=10).until(document_initialised)
+
     username = driver.find_element(By.CLASS_NAME, 'input__input')
     username.send_keys('lucastroncoso.seguros@gmail.com')
     password = driver.find_element(By.ID, 'session_password')
@@ -39,8 +42,8 @@ try:
     driver.get(sys.argv[1])
     sel = Selector(text=driver.page_source)
     sleep(5)
-    name = sel.xpath(
-           '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()
+    name = wait.until(sel.xpath(
+        '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first())
     if name:
         result['name'] = name.strip()
     else:

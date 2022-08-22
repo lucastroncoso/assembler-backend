@@ -1,10 +1,6 @@
-import { IsString, IsNotEmpty, IsMongoId } from '@nestjs/class-validator';
+import { IsString, IsNotEmpty } from '@nestjs/class-validator';
 
 export class CreateStudentDto {
-  @IsMongoId()
-  @IsNotEmpty()
-  _id: string;
-
   @IsString()
   @IsNotEmpty()
   name: string;

@@ -22,6 +22,7 @@ chrome_options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 try:
     driver.get('https://www.linkedin.com/')
+    sleep(5)
     username = driver.find_element(By.CLASS_NAME, 'input__input')
     username.send_keys('lucastroncoso.seguros@gmail.com')
     password = driver.find_element(By.ID, 'session_password')
@@ -35,7 +36,7 @@ try:
 
     driver.get(sys.argv[1])
     sel = Selector(text=driver.page_source)
-    sleep(2)
+    sleep(5)
     name = sel.xpath(
            '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()
     if name:

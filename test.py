@@ -17,11 +17,11 @@ try:
         By.CLASS_NAME, 'sign-in-form__submit-button')
     log_in_button.click()
 
-    result = {"name":""}
+    result = {}
 
-    driver.get('https://www.linkedin.com/in/francescomariaballarani/')
+    driver.get(sys.argv[1])
     sel = Selector(text=driver.page_source)
-    sleep(3)
+    sleep(2)
     name = sel.xpath(
            '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()
     if name:
@@ -55,6 +55,5 @@ try:
     print(result)
 except Exception as e:
     print(e)
-print('First param:'+sys.argv[1]+'#')
-print('Second param:'+sys.argv[2]+'#')
+
 sys.stdout.flush()

@@ -11,6 +11,10 @@ export class Student {
   classGroup: string;
   @Prop({ required: true })
   gender: string;
+  @Prop()
+  url: string;
+  @Prop({ required: true })
+  linkedinInfo: string;
 }
 
 export type StudentDocument = Student & Document;

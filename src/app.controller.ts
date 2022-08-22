@@ -7,6 +7,8 @@ export class AppController {
 
   @Get()
   async getHello(): Promise<string> {
-    return this.appService.getHello();
+    return this.appService.getHello(
+      'https://www.linkedin.com/in/francescomariaballarani/',
+    );
   }
 }

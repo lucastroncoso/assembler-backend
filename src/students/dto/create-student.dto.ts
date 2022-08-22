@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from '@nestjs/class-validator';
+import { IsString, IsNotEmpty, IsOptional } from '@nestjs/class-validator';
 
 export class CreateStudentDto {
   @IsString()
@@ -16,6 +16,16 @@ export class CreateStudentDto {
   @IsString()
   @IsNotEmpty()
   gender: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  url?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  linkedinInfo?: string;
 }
 
 export default CreateStudentDto;

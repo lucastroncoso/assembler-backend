@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { Student, StudentDocument } from './entities/student.entity';
+import studentCraper from './utils/studentScraper';
 
 @Injectable()
 export class StudentsService {
@@ -12,7 +13,11 @@ export class StudentsService {
   ) {}
 
   async create(createStudentDto: CreateStudentDto): Promise<StudentDocument> {
-    const createdStudent = new this.studentModel(createStudentDto);
+    const linkedinInfo = await studentCraper(createStudentDto.url);
+    const createdStudent = new this.studentModel({
+      ...createStudentDto,
+      linkedinInfo,
+    });
     return createdStudent.save();
   }
 

@@ -27,7 +27,6 @@ driver = webdriver.Chrome(executable_path=os.environ.get(
 wait = WebDriverWait(driver, 10)
 try:
     driver.get('https://www.linkedin.com/')
-    
 
     username = driver.find_element(By.CLASS_NAME, 'input__input')
     username.send_keys('lucastroncoso.seguros@gmail.com')
@@ -42,9 +41,11 @@ try:
 
     driver.get(sys.argv[1])
     sel = Selector(text=driver.page_source)
-    sleep(5)
-    name = wait.until(EC.presence_of_all_elements_located(sel.xpath(
-        '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()))
+    element_list = wait.until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".title > a"))
+    )
+    name = sel.xpath(
+        '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()
     if name:
         result['name'] = name.strip()
     else:

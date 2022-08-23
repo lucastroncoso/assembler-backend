@@ -40,10 +40,11 @@ try:
     result = {}
 
     driver.get(sys.argv[1])
-    sel = Selector(text=driver.page_source)
+
     element_list = wait.until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".title > a"))
     )
+    sel = Selector(text=driver.page_source)
     name = sel.xpath(
         '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()
     if name:
@@ -78,6 +79,6 @@ try:
     time.sleep(2)
     driver.quit()
 except Exception as e:
-    print(e)
+    print({"e":e})
 
 sys.stdout.flush()

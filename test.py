@@ -9,6 +9,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from parsel import Selector
 
 # driver = webdriver.Chrome()
@@ -42,8 +43,8 @@ try:
     driver.get(sys.argv[1])
     sel = Selector(text=driver.page_source)
     sleep(5)
-    name = wait.until(sel.xpath(
-        '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first())
+    name = wait.until(EC.presence_of_all_elements_located(sel.xpath(
+        '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()))
     if name:
         result['name'] = name.strip()
     else:

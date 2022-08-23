@@ -1,3 +1,4 @@
+from concurrent.futures import process
 import sys
 import os
 from time import sleep
@@ -13,25 +14,25 @@ from selenium.webdriver.support import expected_conditions as EC
 from parsel import Selector
 
 # driver = webdriver.Chrome()
-# options = Options()
-# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+options = Options()
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument('--disable-gpu')
-driver = webdriver.Chrome(executable_path=os.environ.get(
-    "CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-wait = WebDriverWait(driver, 10)
+# chrome_options = webdriver.ChromeOptions()
+# chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+# chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--disable-dev-shm-usage")
+# chrome_options.add_argument("--no-sandbox")
+# chrome_options.add_argument('--disable-gpu')
+# driver = webdriver.Chrome(executable_path=os.environ.get(
+#     "CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+# wait = WebDriverWait(driver, 10)
 try:
     driver.get('https://www.linkedin.com/')
     sleep(5)
     username = driver.find_element(By.CLASS_NAME, 'input__input')
-    username.send_keys('lucastroncoso.seguros@gmail.com')
+    username.send_keys(sys.argv[2])
     password = driver.find_element(By.ID, 'session_password')
-    password.send_keys('Mevanapagarendolares1000!')
+    password.send_keys(sys.argv[3])
     # Clicking on the login button
     log_in_button = driver.find_element(
         By.CLASS_NAME, 'sign-in-form__submit-button')
@@ -41,9 +42,9 @@ try:
 
     driver.get(sys.argv[1])
 
-    element_list = wait.until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".title > a"))
-    )
+    # element_list = wait.until(
+    #     EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".title > a"))
+    # )
     sel = Selector(text=driver.page_source)
     name = sel.xpath(
         '//*[starts-with(@class, "text-heading-xlarge")]/text()').extract_first()

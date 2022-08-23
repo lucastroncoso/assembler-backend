@@ -13,11 +13,16 @@ export class StudentsService {
   ) {}
 
   async create(createStudentDto: CreateStudentDto): Promise<StudentDocument> {
-    const linkedinInfo = await studentCraper(createStudentDto.url);
-    const createdStudent = new this.studentModel({
-      ...createStudentDto,
-      linkedinInfo,
-    });
+    let createdStudent;
+    if (createStudentDto.url) {
+      const linkedinInfo = await studentCraper(createStudentDto.url);
+      createdStudent = new this.studentModel({
+        ...createStudentDto,
+        linkedinInfo,
+      });
+    } else {
+      createdStudent = new this.studentModel(createStudentDto);
+    }
     return createdStudent.save();
   }
 

@@ -13,7 +13,7 @@ export class Student {
   gender: string;
   @Prop()
   url: string;
-  @Prop({ required: true })
+  @Prop()
   linkedinInfo: string;
 }
 

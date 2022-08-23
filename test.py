@@ -27,7 +27,7 @@ driver = webdriver.Chrome(executable_path=os.environ.get(
 wait = WebDriverWait(driver, 10)
 try:
     driver.get('https://www.linkedin.com/')
-
+    sleep(5)
     username = driver.find_element(By.CLASS_NAME, 'input__input')
     username.send_keys('lucastroncoso.seguros@gmail.com')
     password = driver.find_element(By.ID, 'session_password')
